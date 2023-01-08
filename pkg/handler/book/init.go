@@ -11,7 +11,7 @@ type BookHandler struct {
 	BookService book.BookInterfaces
 }
 
-func InitV1(r *gin.Engine, svc *service.Service) {
+func InitApiV1(r *gin.Engine, svc *service.Service) {
 	b := &BookHandler{
 		BookService: svc.BookService,
 	}

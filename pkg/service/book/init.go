@@ -10,6 +10,6 @@ type BookInterfaces interface {
 type BookService struct {
 }
 
-func Init() BookInterfaces {
+func InitBookService() BookInterfaces {
 	return &BookService{}
 }

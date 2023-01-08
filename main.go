@@ -9,8 +9,8 @@ import (
 func main() {
 	r := gin.Default()
 
-	svc := service.Init()
-	_ = handler.Init(r, svc)
+	svc := service.InitService()
+	handler.InitHandler(r, svc)
 
 	r.Run()
 }

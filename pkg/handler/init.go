@@ -10,9 +10,8 @@ type Handler struct {
 	svc *service.Service
 }
 
-func Init(r *gin.Engine, svc *service.Service) *Handler {
-	book.InitV1(r, svc)
-	return &Handler{
-		svc: svc,
-	}
+func InitHandler(r *gin.Engine, svc *service.Service) {
+	h := Handler{}
+	h.svc = svc
+	book.InitApiV1(r, svc)
 }

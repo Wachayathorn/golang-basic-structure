@@ -1,5 +1,5 @@
 package book
 
-func (s *BookService) AddBook() error {
+func (b *BookService) AddBook() error {
 	return nil
 }

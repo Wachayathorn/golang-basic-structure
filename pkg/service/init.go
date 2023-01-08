@@ -6,8 +6,8 @@ type Service struct {
 	BookService book.BookInterfaces
 }
 
-func Init() *Service {
+func InitService() *Service {
 	return &Service{
-		BookService: book.Init(),
+		BookService: book.InitBookService(),
 	}
 }

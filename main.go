@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
@@ -15,6 +16,7 @@ import (
 
 func main() {
 	r := gin.Default()
+	r.GET("/", HealthCheck)
 
 	// Init configuration
 	var env string
@@ -51,4 +53,11 @@ func main() {
 
 	log.Infof("Server start port:%s\n", port)
 	r.Run()
+}
+
+func HealthCheck(c *gin.Context) {
+	res := map[string]interface{}{
+		"data": "Server is up and running",
+	}
+	c.JSON(http.StatusOK, res)
 }

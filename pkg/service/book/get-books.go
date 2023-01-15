@@ -1,13 +1,9 @@
-package book
+package bookservice
 
-import "github.com/wachayathorn/golang-basic-structure/pkg/model"
+import (
+	bookrepository "github.com/wachayathorn/golang-basic-structure/pkg/repository/book"
+)
 
-func (b *BookService) GetBooks() []model.Book {
-	return []model.Book{
-		{
-			Title:       "Title",
-			Author:      "Author",
-			Description: "Description",
-		},
-	}
+func (b *BookService) GetBooks() []bookrepository.Book {
+	return b.repo.GetBooks()
 }

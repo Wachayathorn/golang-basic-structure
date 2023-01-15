@@ -1,2 +1,10 @@
 env: "dev"
-port: 8080
+port: "8080"
+
+postgresql:
+  host: localhost
+  port: "5432"
+  username: admin
+  password: P@ssw0rd
+  dbname: admin
+  timezone: Asia/Bangkok

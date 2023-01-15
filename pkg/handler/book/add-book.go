@@ -1,4 +1,4 @@
-package book
+package bookhandler
 
 import (
 	"net/http"
@@ -15,10 +15,11 @@ func (h *BookHandler) AddBook(c *gin.Context) {
 		return
 	}
 
-	if err := h.BookService.AddBook(); err != nil {
+	result, err := h.BookService.AddBook(body)
+	if err != nil {
 		c.AbortWithError(http.StatusInternalServerError, err)
 		return
 	}
 
-	c.JSON(http.StatusCreated, &body)
+	c.JSON(http.StatusCreated, result)
 }

@@ -1,15 +1,21 @@
-package book
+package bookservice
 
-import "github.com/wachayathorn/golang-basic-structure/pkg/model"
+import (
+	"github.com/wachayathorn/golang-basic-structure/pkg/model"
+	bookrepository "github.com/wachayathorn/golang-basic-structure/pkg/repository/book"
+)
 
 type BookInterfaces interface {
-	AddBook() error
-	GetBooks() []model.Book
+	AddBook(book model.Book) (bookrepository.Book, error)
+	GetBooks() []bookrepository.Book
 }
 
 type BookService struct {
+	repo bookrepository.BookRepository
 }
 
-func InitBookService() BookInterfaces {
-	return &BookService{}
+func InitBookService(repo bookrepository.BookRepository) BookInterfaces {
+	return &BookService{
+		repo: repo,
+	}
 }

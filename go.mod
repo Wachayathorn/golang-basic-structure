@@ -7,6 +7,7 @@ require (
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.14.0
 	github.com/stretchr/testify v1.8.1
+	gorm.io/driver/postgres v1.4.6
 	gorm.io/gorm v1.24.3
 )
 
@@ -19,6 +20,9 @@ require (
 	github.com/go-playground/validator/v10 v10.11.1 // indirect
 	github.com/goccy/go-json v0.9.11 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20221227161230-091c0ba34f0a // indirect
+	github.com/jackc/pgx/v5 v5.2.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -38,7 +42,7 @@ require (
 	github.com/stretchr/objx v0.5.0 // indirect
 	github.com/subosito/gotenv v1.4.1 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e // indirect
+	golang.org/x/crypto v0.4.0 // indirect
 	golang.org/x/net v0.4.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect
 	golang.org/x/text v0.5.0 // indirect

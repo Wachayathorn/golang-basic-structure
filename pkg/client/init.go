@@ -1,12 +1,16 @@
 package client
 
 import (
+	"github.com/wachayathorn/golang-basic-structure/pkg/model"
+	bookrepository "github.com/wachayathorn/golang-basic-structure/pkg/repository/book"
 	"github.com/wachayathorn/golang-basic-structure/pkg/utils"
 )
 
 type ClientAPI interface {
 	ReplaceUrl(url string)
-	GetBooks() (string, error)
+
+	AddBook(book model.Book) (bookrepository.Book, error)
+	GetBooks() ([]bookrepository.Book, error)
 }
 
 type Client struct {

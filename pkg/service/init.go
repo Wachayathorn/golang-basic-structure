@@ -1,13 +1,16 @@
 package service
 
-import "github.com/wachayathorn/golang-basic-structure/pkg/service/book"
+import (
+	"github.com/wachayathorn/golang-basic-structure/pkg/repository"
+	bookservice "github.com/wachayathorn/golang-basic-structure/pkg/service/book"
+)
 
 type Service struct {
-	BookService book.BookInterfaces
+	BookService bookservice.BookInterfaces
 }
 
-func InitService() *Service {
+func Init(repo *repository.RepositoryImpl) *Service {
 	return &Service{
-		BookService: book.InitBookService(),
+		BookService: bookservice.InitBookService(repo.BookRepository),
 	}
 }

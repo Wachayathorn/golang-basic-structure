@@ -1,4 +1,4 @@
-package book
+package bookhandler
 
 import (
 	"net/http"

@@ -1,24 +1,24 @@
-package book
+package bookhandler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/wachayathorn/golang-basic-structure/pkg/handler/book/httpinfo"
+	bookhttpinfo "github.com/wachayathorn/golang-basic-structure/pkg/handler/book/httpinfo"
 	"github.com/wachayathorn/golang-basic-structure/pkg/handler/middleware"
 	"github.com/wachayathorn/golang-basic-structure/pkg/service"
-	"github.com/wachayathorn/golang-basic-structure/pkg/service/book"
+	bookservice "github.com/wachayathorn/golang-basic-structure/pkg/service/book"
 )
 
 type BookHandler struct {
-	BookService book.BookInterfaces
+	BookService bookservice.BookInterfaces
 }
 
-func InitApiV1(r *gin.Engine, svc *service.Service) {
+func InitV1(r *gin.Engine, svc *service.Service) {
 	b := &BookHandler{
 		BookService: svc.BookService,
 	}
-	book := r.Group(httpinfo.GroupV1)
+	book := r.Group(bookhttpinfo.GroupV1)
 	{
-		book.POST(httpinfo.AddBook, b.AddBook, middleware.Middleware)
-		book.GET(httpinfo.GetBooks, b.GetBooks, middleware.Middleware)
+		book.POST(bookhttpinfo.AddBook, b.AddBook, middleware.Middleware)
+		book.GET(bookhttpinfo.GetBooks, b.GetBooks, middleware.Middleware)
 	}
 }

@@ -1,7 +1,6 @@
 CREATE TABLE book (  
-	id            INT,  
-	title         TEXT,  
-	author        TEXT,  
-	description   TEXT,  
-	PRIMARY KEY (id) 
+	id            SERIAL PRIMARY KEY,  
+	title         TEXT NOT NULL,  
+	author        TEXT NOT NULL,  
+	description   TEXT
 );

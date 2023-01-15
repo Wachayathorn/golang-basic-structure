@@ -7,6 +7,18 @@ import (
 	"github.com/wachayathorn/golang-basic-structure/pkg/model"
 )
 
+// AddBook godoc
+// @summary Add Book
+// @description Add Book
+// @tags book
+// @id AddBook
+// @accept json
+// @produce json
+// @param Book body model.Book true "Book data to be created"
+// @response 201 {object} bookrepository.Book "Created"
+// @response 400 {string} string "Bad Request"
+// @response 500 {string} string "Internal Server Error"
+// @Router /api/v1/book [post]
 func (h *BookHandler) AddBook(c *gin.Context) {
 	body := model.Book{}
 

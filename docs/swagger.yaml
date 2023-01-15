@@ -1,0 +1,84 @@
+definitions:
+  bookrepository.Book:
+    properties:
+      author:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+    type: object
+  model.Book:
+    properties:
+      author:
+        example: Mr. John Corner
+        type: string
+      description:
+        example: This book for my family
+        type: string
+      title:
+        example: Title
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: API Document
+  version: "1.0"
+paths:
+  /api/v1/book:
+    get:
+      consumes:
+      - application/json
+      description: Get books
+      operationId: GetBooks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/bookrepository.Book'
+            type: array
+      summary: Get books
+      tags:
+      - book
+    post:
+      consumes:
+      - application/json
+      description: Add Book
+      operationId: AddBook
+      parameters:
+      - description: Book data to be created
+        in: body
+        name: Book
+        required: true
+        schema:
+          $ref: '#/definitions/model.Book'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/bookrepository.Book'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Add Book
+      tags:
+      - book
+schemes:
+- http
+swagger: "2.0"

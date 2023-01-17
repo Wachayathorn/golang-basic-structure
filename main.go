@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -35,8 +34,6 @@ func main() {
 	if err != nil {
 		log.Fatalf("Load config error:%s", err.Error())
 	}
-
-	fmt.Printf("Config : %+v", c)
 
 	// Init logrus
 	log.SetFormatter(&log.TextFormatter{})

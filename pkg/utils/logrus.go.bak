@@ -1,0 +1,61 @@
+package main
+
+import (
+	"context"
+	"github.com/Sirupsen/logrus"
+	"cloud.google.com/go/logging"
+)
+
+type GCPHook struct {
+	client *logging.Client
+	logger *logging.Logger
+}
+
+func NewGCPHook(projectID string, logID string) (*GCPHook, error) {
+	ctx := context.Background()
+	client, err := logging.NewClient(ctx, projectID)
+	if err != nil {
+		return nil, err
+	}
+	logger := client.Logger(logID)
+	return &GCPHook{client, logger}, nil
+}
+
+func (hook *GCPHook) Fire(entry *logrus.Entry) error {
+	severity := logging.Info
+	switch entry.Level {
+	case logrus.PanicLevel:
+		severity = logging.Emergency
+	case logrus.FatalLevel:
+		severity = logging.Critical
+	case logrus.ErrorLevel:
+		severity = logging.Error
+	case logrus.WarnLevel:
+		severity = logging.Warning
+	case logrus.InfoLevel:
+		severity = logging.Info
+	case logrus.DebugLevel:
+		severity = logging.Debug
+	}
+	labels := make(map[string]string)
+	for k, v := range entry.Data {
+		labels[k] = v.(string)
+	}
+	hook.logger.Log(logging.Entry{
+		Payload:  entry.Message,
+		Severity: severity,
+		Labels:   labels,
+	})
+	return nil
+}
+
+func (hook *GCPHook) Levels() []logrus.Level {
+	return logrus.AllLevels
+}
+
+func main() {
+	hook, _ := NewGCPHook("your-project-id", "your-log-id")
+	log := logrus.New()
+	log.Hooks.Add(hook)
+	log.Info("Hello from Logrus to GCP Logging")
+}

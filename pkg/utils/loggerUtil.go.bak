@@ -1,0 +1,94 @@
+package utils
+
+import (
+	"context"
+	"os"
+
+	log "github.com/sirupsen/logrus"
+
+	"cloud.google.com/go/logging"
+)
+
+const (
+	LogStart string = "start"
+	LogEnd   string = "end"
+
+	DevelopmentMode string = "development"
+)
+
+func InitLogger(env string, projectId, appId string) error {
+	log.SetReportCaller(true)
+	if env == DevelopmentMode {
+		log.SetOutput(os.Stdout)
+		log.SetFormatter(&log.JSONFormatter{
+			PrettyPrint: true,
+		})
+		log.AddHook(&FieldHookLocal{
+			env: env,
+		})
+	} else {
+		client, err := logging.NewClient(context.Background(), projectId)
+		if err != nil {
+			return err
+		}
+		log.AddHook(&FieldHookGCP{
+			client: client,
+			logger: client.Logger(appId),
+			env:    env,
+		})
+	}
+
+	return nil
+}
+
+type FieldHookLocal struct {
+	env string
+}
+
+func (hook *FieldHookLocal) Fire(entry *log.Entry) error { // Map logrus level with gcp logger level
+	entry.Data["env"] = hook.env
+	return nil
+}
+
+func (hook *FieldHookLocal) Levels() []log.Level {
+	return log.AllLevels
+}
+
+type FieldHookGCP struct {
+	client *logging.Client
+	logger *logging.Logger
+	env    string
+}
+
+func (hook *FieldHookGCP) Fire(entry *log.Entry) error { // Map logrus level with gcp logger level
+	severity := logging.Info
+	switch entry.Level {
+	case log.PanicLevel:
+		severity = logging.Emergency
+	case log.FatalLevel:
+		severity = logging.Critical
+	case log.ErrorLevel:
+		severity = logging.Error
+	case log.WarnLevel:
+		severity = logging.Warning
+	case log.InfoLevel:
+		severity = logging.Info
+	case log.DebugLevel:
+		severity = logging.Debug
+	}
+	labels := make(map[string]string)
+	for k, v := range entry.Data {
+		labels[k] = v.(string)
+	}
+	entry.Data["env"] = hook.env
+	hook.logger.Log(logging.Entry{
+		Payload:  entry.Message,
+		Severity: severity,
+		Labels:   labels,
+	})
+	return nil
+}
+
+func (hook *FieldHookGCP) Levels() []log.Level {
+	return log.AllLevels
+}
